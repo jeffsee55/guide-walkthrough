@@ -58,7 +58,10 @@
           "type": "string",
           "label": "Body",
           "name": "body",
-          "isBody": true
+          "isBody": true,
+          "ui": {
+            "component": "markdown"
+          }
         }
       ]
     }

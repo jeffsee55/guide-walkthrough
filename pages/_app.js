@@ -2,6 +2,7 @@ import "../styles/index.css";
 import dynamic from "next/dynamic";
 import { TinaEditProvider } from "tinacms/dist/edit-state";
 const TinaCMS = dynamic(() => import("tinacms"), { ssr: false });
+import { MarkdownFieldPlugin } from "react-tinacms-editor";
 
 const App = ({ Component, pageProps }) => {
   return (
@@ -12,6 +13,9 @@ const App = ({ Component, pageProps }) => {
             clientId={process.env.NEXT_PUBLIC_TINA_CLIENT_ID}
             branch={process.env.NEXT_PUBLIC_EDIT_BRACH}
             organization={process.env.NEXT_PUBLIC_ORGANIZATION_NAME}
+            cmsCallback={(cms) => {
+              cms.plugins.add(MarkdownFieldPlugin);
+            }}
             isLocalClient={Boolean(
               Number(process.env.NEXT_PUBLIC_USE_LOCAL_CLIENT ?? true)
             )}

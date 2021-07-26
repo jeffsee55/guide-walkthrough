@@ -98,6 +98,9 @@
           "label": "Body",
           "name": "body",
           "isBody": true,
+          "ui": {
+            "component": "markdown"
+          },
           "namespace": [
             "posts",
             "body"

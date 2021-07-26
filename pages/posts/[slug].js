@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
+import { useEffect, useState } from "react";
 import Container from "../../components/container";
 import PostBody from "../../components/post-body";
 import Header from "../../components/header";
@@ -15,10 +16,18 @@ export default function Post({ data, slug }) {
   const { title, coverImage, date, author, body, ogImage } =
     data.getPostsDocument.data;
   const router = useRouter();
+  const [content, setContent] = useState("");
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />;
   }
+  useEffect(() => {
+    const parseMarkdown = async () => {
+      setContent(await markdownToHtml(body));
+    };
+
+    parseMarkdown();
+  }, [body]);
   return (
     <Layout preview={false}>
       <Container>
@@ -40,7 +49,7 @@ export default function Post({ data, slug }) {
                 date={date}
                 author={author}
               />
-              <PostBody content={body} />
+              <PostBody content={content} />
             </article>
           </>
         )}
